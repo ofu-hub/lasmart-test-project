@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Add Point";
+}
+
+<div class="form_container">
+  <form id="form">
+    <div class="form-group">
+      <label for="inputPositionX">PositionX</label>
+      <input type="number" class="form-control" id="inputPositionX" name="PositionX" placeholder="Input numbers">
+    </div>
+    <div class="form-group">
+      <label for="inputPositionY">PositionY</label>
+      <input type="number" class="form-control" id="inputPositionY" name="PositionY" placeholder="Input numbers">
+    </div>
+    <div class="form-group">
+      <label for="inputRadius">Radius</label>
+      <input type="number" class="form-control" id="inputRadius" name="Radius" placeholder="Input numbers">
+    </div>
+    <div class="form-group">
+      <label for="inputColor">Color</label>
+      <input type="text" class="form-control" id="inputColor" name="Color" placeholder="Input text without numbers" pattern="^[a-zA-Z]+$">
+    </div>
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </form>
+</div>
+
+<script>
+$("#form").on("submit", function(){
+	$.ajax({
+		url: '/Point/Put',
+		method: 'PUT',
+		dataType: 'html',
+		data: $(this).serialize(),
+		success: function(data){
+			$('#message').html(data);
+		}
+	});
+});
+</script>

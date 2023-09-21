@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Add Comment";
+}
+
+<div class="form_container">
+  <form id="form">
+	  <div class="form-group">
+		  <label for="inputPointId">Select point id</label>
+		  <select class="form-select" type="number" class="form-control" id="inputPointId" name="PointId">
+			  <option selected>Open this select menu</option>
+		  </select>
+	  </div>
+	  <div class="form-group">
+		  <label for="inputComment">Comment</label>
+		  <input type="number" class="form-control" id="inputComment" name="Text" placeholder="Input text">
+	  </div>
+	  <div class="form-group">
+		  <label for="inputColor">Color</label>
+		  <input type="text" class="form-control" id="inputColor" name="Color" placeholder="Input text without numbers" pattern="^[a-zA-Z]+$">
+	  </div>
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </form>
+</div>
+
+<script>
+$(document).ready(function () {
+	$.get('/Point/Get', function (data) {
+		console.log(data)
+		$.each(data, function (index, value) {
+			$('<option>').val(value.id).text("Id: " + value.id + " ; Color: " + value.color).appendTo("#inputPointId");
+		})
+	})
+})
+
+$("#form").on("submit", function(){
+	$.ajax({
+		url: '/Comment/Add',
+		method: 'POST',
+		dataType: 'html',
+		data: $(this).serialize(),
+		success: function(data){
+			$('#message').html(data);
+		}
+	});
+});
+</script>
